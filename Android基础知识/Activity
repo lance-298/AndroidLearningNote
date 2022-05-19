@@ -125,3 +125,11 @@ public void onRestoreInstanceState(Bundle savedInstanceState) {
         int myInt = savedInstanceState.getInt("MyInt");
         String myString = savedInstanceState.getString("MyString");
 }
+
+6.activity与service的通信方式
+
+http://itindex.net/detail/45126-android-service-activity
+1、Binder（bindService）
+2、Intent
+3、接口 Interface
+4、Broadcast 广播接收
