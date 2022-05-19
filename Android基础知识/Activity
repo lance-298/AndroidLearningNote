@@ -1,1 +1,16 @@
+1、activity的声明周期，以及各生命周期的功能
+https://develop er.android.com/guide/components/images/activity_lifecycle.png
+正常情况下的声明周期：oncreate -> onStart -> onResume -> onPause -> onStop ->  onDestroy
+oncreate: 实现基本设置的代码，比如声明界面（在XML中定义），将数据绑定到界面等；此方法会接收 savedInstanceState 参数，后者是包含 Activity 先前保存状态的 Bundle 对象
+onStart:  Activity 对用户可见，因为应用会为 Activity 进入前台并支持互动做准备;
+onResume: 应用与用户处于交互状态；
+onPause: 
 
+2、activity四种启动模式，以及应用场景
+
+activity的四种启动模式：
+standard，标准模式，默认设置，每次都在返回栈生成一个新的Activity实例。
+singleTop，栈顶复用，如果activity已经在返回栈栈顶，那么就不会在返回栈中创建新的实例。如果不在返回栈栈顶，就会创建一个新的acitivity实例。
+比较常见的场景是给通知跳转的activity设置，因为不想在前台已经是该activity的情况下，点击通知，又创建一个相同的activity。
+这时，activity的声明周期应该为onPause() -> onRestart() -> onStart() -> 数据通过onNewIntent()传递 -> onResume()
+singleTask，栈内复用，如果activity已经在返回栈中，那么就不会创建新的activity实例，同时清空上面所有activity，
