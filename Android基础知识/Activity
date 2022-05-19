@@ -1,16 +1,28 @@
 1、activity的声明周期，以及各生命周期的功能
+
 https://develop er.android.com/guide/components/images/activity_lifecycle.png
 正常情况下的声明周期：oncreate -> onStart -> onResume -> onPause -> onStop ->  onDestroy
 oncreate: 实现基本设置的代码，比如声明界面（在XML中定义），将数据绑定到界面等；此方法会接收 savedInstanceState 参数，后者是包含 Activity 先前保存状态的 Bundle 对象
 onStart:  Activity 对用户可见，因为应用会为 Activity 进入前台并支持互动做准备;
 onResume: 应用与用户处于交互状态；
-onPause: 
+onPause: 系统将此方法视为用户将要离开您的 Activity 的第一个标志（尽管这并不总是意味着 Activity 会被销毁）；
+此方法表示 Activity 不再位于前台（尽管在用户处于多窗口模式时 Activity 仍然可见），可以进行如视频暂停等操作
+onStop: Activity 不再对用户可见，例如，当新启动的 Activity 覆盖整个屏幕时，可能会发生这种情况。
+应用应释放或调整在应用对用户不可见时的无用资源。例如，应用可以暂停动画效果，或从精确位置更新切换到粗略位置更新。
+还应使用 onStop() 执行 CPU 相对密集的关闭操作。例如，如果您无法找到更合适的时机来将信息保存到数据库
+onDestroy: 系统调用此回调的原因如下：
+Activity 即将结束（由于用户彻底关闭 Activity 或由于系统为 Activity 调用 finish()），或者由于配置变更（例如设备旋转或多窗口模式），系统暂时销毁 Activity
+
 
 2、activity四种启动模式，以及应用场景
 
+https://developer.android.com/guide/components/activities/tasks-and-back-stack#TaskLaunchModes
 activity的四种启动模式：
-standard，标准模式，默认设置，每次都在返回栈生成一个新的Activity实例。
-singleTop，栈顶复用，如果activity已经在返回栈栈顶，那么就不会在返回栈中创建新的实例。如果不在返回栈栈顶，就会创建一个新的acitivity实例。
+standard：标准模式，默认设置，每次都在返回栈生成一个新的Activity实例。
+singleTop：栈顶复用，如果activity已经在返回栈栈顶，那么就不会在返回栈中创建新的实例，通过onNewIntent()返回。如果不在返回栈栈顶，就会创建一个新的acitivity实例。
 比较常见的场景是给通知跳转的activity设置，因为不想在前台已经是该activity的情况下，点击通知，又创建一个相同的activity。
 这时，activity的声明周期应该为onPause() -> onRestart() -> onStart() -> 数据通过onNewIntent()传递 -> onResume()
-singleTask，栈内复用，如果activity已经在返回栈中，那么就不会创建新的activity实例，同时清空上面所有activity，
+singleTask：栈内复用，如果activity已经在返回栈中，那么就不会创建新的activity实例，通过onNewIntent()返回，同时清空上面所有activity。
+singleTask适合作为程序入口点。例如浏览器的主界面。不管从多少个应用启动浏览器，只会启动主界面一次，其余情况都会走onNewIntent，并且会清空主界面上面的其他页面。
+singleInstance：与 "singleTask" 相似，唯一不同的是系统不会将任何其他 Activity 启动到包含该实例的任务中。
+该 Activity 始终是其任务唯一的成员；由该 Activity 启动的任何 Activity 都会在其他的任务中打开。
