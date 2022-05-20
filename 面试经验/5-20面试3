@@ -16,3 +16,7 @@
 减少绘制层级，减少使用linearlayout，多使用相对布局；
 引用可以重复使用的界面，如include 和 merger
 按需引用，使用ViewStub
+
+6、java类的加载过程
+
+7、算法，实现数组的随机排序
