@@ -1,4 +1,4 @@
-1、view的点击事件详细流程
+1、view的点击事件详细流程，如何在view中提前通知viewgroup不要拦截
 
 2、recycleviewer与listView相比有什么优势
 
