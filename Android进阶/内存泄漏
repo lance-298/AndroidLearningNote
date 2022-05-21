@@ -2,7 +2,7 @@
 
 https://www.bilibili.com/video/BV1n44y1K7xS?p=14&spm_id_from=pageDriver
 
-内存溢出，是应用实际使用的内存，超过了给该应用分配的内存，没有足够的内存空间供其实用，从而出现out of memory error。
+内存溢出OOM，是应用实际使用的内存，超过了给该应用分配的内存，没有足够的内存空间供其实用，从而出现out of memory error。
 产生原因：比如，持续创建大内存的对象，不进行回收；循环引用，A持有B，B也持有A，在解析JSON中可能会遇到
 解决方法：使用后的对象进行及时清除（置null)，避免循环引用
 
