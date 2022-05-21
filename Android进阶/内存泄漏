@@ -27,6 +27,7 @@ https://www.bilibili.com/video/BV1n44y1K7xS?p=14&spm_id_from=pageDriver
 1）leakcanary 不直观
 核心原理及代码：https://www.bilibili.com/video/BV1n44y1K7xS?p=14&spm_id_from=pageDriver
 主要检测对象：已销毁的activity实例；销毁的fragment实例；销毁的fragmentview实例；已清楚的viewmodel实例。
+此外，应该应用于调试模式，debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
 2）Android studio -> androif profiler -> memory -> heap dump(保存的堆转储文件hprof) -> Leaks
 
