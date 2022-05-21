@@ -22,5 +22,6 @@
 2、内存分析使用的工具
 1）leakcanary 不直观
 
-2）Android studio -> androif profiler -> memory -> heap dump(保存的堆转储文件) -> Leaks
+2）Android studio -> androif profiler -> memory -> heap dump(保存的堆转储文件hprof) -> Leaks
 
+3)MAT(memory analysis tool
