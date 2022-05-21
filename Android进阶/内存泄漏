@@ -30,4 +30,22 @@ https://www.bilibili.com/video/BV1n44y1K7xS?p=14&spm_id_from=pageDriver
 
 2）Android studio -> androif profiler -> memory -> heap dump(保存的堆转储文件hprof) -> Leaks
 
-3)MAT(memory analysis tool) 可以通过Android studio生成的hprof转换后，进行分析
+3)MAT(memory analyzer tool) 可以通过Android studio生成的hprof转换后，进行分析
+
+
+
+3、OOM内存溢出的常见场景及捕获定位
+
+https://www.bilibili.com/video/BV1n44y1K7xS?p=17&spm_id_from=pageDriver
+常见原因：
+加载大图片（比如，2592*1936 ARGB_8888 ，图片加载到内存需要19MB的大小），可以通过图片压缩进行处理；
+内存泄漏，积少成多
+
+捕捉oomerror
+OOMError不能通过平常的Exception进行捕获，捕捉不到，虽然exception与error都是继承于throwable。
+如果希望捕捉virtualmachineerror中的oomerror，直接try ... catch(throwable e) 
+
+
+ 
+
+
