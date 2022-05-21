@@ -1,1 +1,15 @@
+绘制流程：
 
+https://www.bilibili.com/video/BV15K411L7gU?p=40
+自定义view的绘制流程：
+1）自定义属性，获取自定义属性（达到配置的效果）
+2）onmeasure()方法用户测量计算自己的宽高，前提是继承自view，如果是继承自系统已有的text view，button，已经计算好了宽高
+3）ondraw用于绘制自己的显示
+4）ontouch用于与用户交互
+
+自定义viewgroup的绘制流程
+1）自定义属性，获取自定义属性（达到配置的效果）很少有
+2）onmeasure方法，for循环测量子view，根据子view的宽高计算自己的宽高
+3）ondraw一般不需要，默认情况下是不会调用，如果你需要绘制应该通过实现dispatchdraw方法
+4)onlayout方法用来摆放子view，前提是子view不是GONE的情况
+5）在很多情况下不会继承自viewgroup，往往是继承系统已经提供好的viewgroup，如viewpager，relativelayout
