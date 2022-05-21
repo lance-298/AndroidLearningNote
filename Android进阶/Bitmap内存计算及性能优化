@@ -1,1 +1,21 @@
 https://blog.csdn.net/qq_44947117/article/details/104140199
+
+1、Bitmap大小的计算方式
+
+1）当图片存放在 res 资源目录，图片占用内存大小 = width * scale * height * scale * 一个像素所占内存大小 ，scale = inTargetDensity / density
+density：图片所在文件夹的密度，inTargetDensity：当前系统密度
+px = dp * (dpi / 160) = dp * density
+
+2）当图片存放在磁盘空间，图片占用内存大小 = width * height * 一个像素所占内存大小
+
+
+
+2、Bitmap性能优化
+
+1）质量压缩
+
+2）尺寸压缩 - 通过两次获取BitmapFactory.Options，第一次decode先设置inJustDecodeBounds为true，获取图片原始大小数据，然后第二次decode设置inJustDecodeBounds为false，根据原始尺寸与需要展示的
+的宽高尺寸，计算出scale比例和inSampleSize，可以实现尺寸压缩scale*scale
+
+
+
