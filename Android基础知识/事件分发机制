@@ -1,2 +1,30 @@
-https://github.com/yoyiyi/SoleilNotes/blob/master/Android/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.md
+
 https://blog.csdn.net/ruiruiddd/article/details/109027021
+
+1、view的touch事件分发
+
+https://github.com/yoyiyi/SoleilNotes/blob/master/Android/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.md
+事件分发的本质其实就是把事件（Touch）封装成 MotionEvent 类，然后传递给 View 的层级处理。
+
+MotionEvent 事件类型主要有下面四种：
+MotionEvent.ACTION_DOWN	按下事件（事件开始）
+MotionEvent.ACTION_UP	抬起事件（与 DOWN 对应）
+MotionEvent.ACTION_MOVE	移动事件
+MotionEvent.ACTION_CANCEL	结束事件
+
+事件分发由三个方法协作完成：
+dispatchTouchEvent()：事件分发
+onTouchEvent()：消费事件、在 dispatchTouchEvent() 中调用
+onInterceptTouchEvent()：拦截事件、只有 ViewGroup 有、在 dispatchTouchEvent() 中调用
+
+2、view的touch事件的执行顺序
+
+https://www.bilibili.com/video/BV15K411L7gU?p=41&spm_id_from=pageDriver
+情况一、
+onTouchListener(return false 不消费)中的onTouch 、onTouchEvent、onClickListenter三者都有，前提是onTouchListener返回false
+onTouchListener.DOWN -> onTouchEvent.DOWN -> onTouchListener.MOVE -> onTouchEvent.MOVE-> onTouchListener.UP -> onTouchEvent.UP -> onClickListenter
+
+情况二、
+onTouchListener(return true 不消费)中的onTouch、 onTouchEvent、onClickListenter三者都有，前提是onTouchListener返回true
+onTouchListener.DOWN -> onTouchListener.MOVE -> onTouchListener.UP 
+
