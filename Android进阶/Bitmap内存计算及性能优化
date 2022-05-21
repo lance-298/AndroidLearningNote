@@ -5,6 +5,12 @@ https://blog.csdn.net/qq_44947117/article/details/104140199
 1）当图片存放在 res 资源目录，图片占用内存大小 = width * scale * height * scale * 一个像素所占内存大小 ，scale = inTargetDensity / density
 density：图片所在文件夹的密度，inTargetDensity：当前系统密度
 px = dp * (dpi / 160) = dp * density
+Bitmap.Config 用来描述图片的像素：
+ARGB_8888: 每个像素占 4 字节，共 32 位，默认设置
+Alpha_8: 只保存透明度，每个像素占 1 字节，共8位
+ARGB_4444: 每个像素占 2 字节，共 16 位
+RGB_565:只存储RGB值，每个像素占 2 字节，共 16 位
+
 
 2）当图片存放在磁盘空间，图片占用内存大小 = width * height * 一个像素所占内存大小
 
