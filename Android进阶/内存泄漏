@@ -24,4 +24,4 @@
 
 2）Android studio -> androif profiler -> memory -> heap dump(保存的堆转储文件hprof) -> Leaks
 
-3)MAT(memory analysis tool
+3)MAT(memory analysis tool) 可以通过Android studio生成的hprof转换后，进行分析
