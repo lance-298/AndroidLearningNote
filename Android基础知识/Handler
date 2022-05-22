@@ -72,11 +72,16 @@ public class MyThread extends Thread{
 ---停止子线程的looper轮询阻塞，但是主线程不能进行quit退出阻塞
 
 既然可以存在多个handler往message queue里面添加数据（发消息时各handler可能处于不同线程），那么内部是如何确保线程安全的？
+---synchronized（this）锁机制，synchronized可以修饰函数、静态函数，代码块，this，class，object，是一种内置锁
+
+如何创建一个message？
+---享元设计模式，通过Message.obtian()或者handler.obtainmessage()方法获取。
 
 如果有一个事件（message）必须尽快执行，那么handler是如何通过消息屏障保证事件的顺利执行？
 
 
 2、handler阻塞机制为什么不会导致ANR？
+ANR和线程阻塞没有关系，出现ANR是因为5秒内没有相应输入事件，如按键/触摸屏幕，或者广播接收在10秒内没有执行完，或者服务20秒内没有执行完成。
 
 
 3、为什么需要在主线程中更新UI，子线程中不行？
