@@ -8,20 +8,18 @@ Android消息循环流程图如下所示：
 
 
 主要涉及的角色如下所示：
-
 message：消息。
 MessageQueue：消息队列，负责消息的存储与管理，负责管理由 Handler 发送过来的 Message。读取会自动删除消息，单链表维护，插入和删除上有优势。在其next()方法中会无限循环，不断判断是否有消息，有就返回这条消息并移除。
 Looper：消息循环器，负责关联线程以及消息的分发，在该线程下从 MessageQueue获取 Message，分发给Handler，Looper创建的时候会创建一个 MessageQueue，调用loop()方法的时候消息循环开始，其中会不断调用messageQueue的next()方法，当有消息就处理，否则阻塞在messageQueue的next()方法中。当Looper的quit()被调用的时候会调用messageQueue的quit()，此时next()会返回null，然后loop()方法也就跟着退出。
 Handler：消息处理器，负责发送并处理消息，面向开发者，提供 API，并隐藏背后实现的细节。
-整个消息的循环流程还是比较清晰的，具体说来：
 
+整个消息的循环流程还是比较清晰的，具体说来：
 1、Handler通过sendMessage()发送消息Message到消息队列MessageQueue。
 2、Looper通过loop()不断提取触发条件的Message，并将Message交给对应的target handler来处理。
 3、target handler调用自身的handleMessage()方法来处理Message。
 事实上，在整个消息循环的流程中，并不只有Java层参与，很多重要的工作都是在C++层来完成的。我们来看下这些类的调用关系。
 
 注：虚线表示关联关系，实线表示调用关系。
-
 在这些类中MessageQueue是Java层与C++层维系的桥梁，MessageQueue与Looper相关功能都通过MessageQueue的Native方法来完成，而其他虚线连接的类只有关联关系，并没有直接调用的关系，它们发生关联的桥梁是MessageQueue。
 
 总结
@@ -34,9 +32,11 @@ Handler 发送的消息由 MessageQueue 存储管理，并由 Looper 负责回�
 
 https://www.bilibili.com/video/BV1Yp4y1a7zJ?spm_id_from=333.337.search-card.all.click
 引申问题：
-一个线程有几个Handler?
+一个线程有几个Handler?  
+--- 无数个，因为每个activity里面可以创建handler，这里都是主线程的handler实例
 
 一个线程有几个Looper？如何保证？
+--- 一个线程只有一个Looper，
 
 Handler内存泄漏的原因？为什么其他的内部类没有说过有这个问题？
 
@@ -50,3 +50,6 @@ Handler内存泄漏的原因？为什么其他的内部类没有说过有这个�
 
 
 2、handler阻塞机制为什么不会导致ANR？
+
+
+3、为什么需要在主线程中更新UI，子线程中不行？
