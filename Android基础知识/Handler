@@ -1,5 +1,6 @@
 Android多线程通信的方式：
 handler：
+asyncTask --已经被淘汰了，但是应用挺广泛
 
 1、handler的流程，两个线程间通信的详细过程
 
