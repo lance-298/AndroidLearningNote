@@ -37,7 +37,7 @@ https://www.bilibili.com/video/BV1Yp4y1a7zJ?spm_id_from=333.337.search-card.all.
 --- 无数个，因为每个activity里面可以创建handler，这里都是主线程的handler实例
 
 一个线程有几个Looper？如何保证？
---- 一个线程只有一个Looper，使用ThreadLocal --> 并发编程，线程共享内存
+--- 一个线程只有一个Looper只有一个messagequeue，使用ThreadLocal --> 并发编程，线程共享内存
 一个线程thread只有一个threadlocalmap，map里面存放key->存放threadlocal（一个looper里面只有一个threadlocal），value -> 存放looper
 
 Handler内存泄漏的原因？为什么其他的内部类没有说过有这个问题？
