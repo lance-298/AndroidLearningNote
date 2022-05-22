@@ -6,7 +6,7 @@ asyncTask --已经被淘汰了，但是应用挺广泛
 
 https://github.com/yangkun19921001/Blog/blob/master/%E7%AC%94%E8%AF%95%E9%9D%A2%E8%AF%95/Android%E9%AB%98%E7%BA%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87/Android/Android%20%E5%9F%BA%E7%A1%80/Handler%20%E5%9F%BA%E7%A1%80.md
 Android消息循环流程图如下所示：
-![](https://github.com/lance-298/AndroidLearningNote/blob/main/Android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/handler%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
+![](https://github.com/lance-298/AndroidLearningNote/blob/main/Android%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/handler.png)
 
 
 主要涉及的角色如下所示：
