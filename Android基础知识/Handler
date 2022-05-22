@@ -37,15 +37,41 @@ https://www.bilibili.com/video/BV1Yp4y1a7zJ?spm_id_from=333.337.search-card.all.
 --- 无数个，因为每个activity里面可以创建handler，这里都是主线程的handler实例
 
 一个线程有几个Looper？如何保证？
---- 一个线程只有一个Looper，
+--- 一个线程只有一个Looper，使用ThreadLocal --> 并发编程，线程共享内存
+一个线程thread只有一个threadlocalmap，map里面存放key->存放threadlocal（一个looper里面只有一个threadlocal），value -> 存放looper
 
 Handler内存泄漏的原因？为什么其他的内部类没有说过有这个问题？
+--- 非静态内部类隐式持有外部类的引用，即handler持有activity的引用，发送message中持有handler的引用，如果message延迟发送，activity退出时，messageQueue中仍持有activity的引用，造成内存泄漏。
+
 
 为什么主线程可以new handler？如果像哟啊在子线程中new handler要做些什么准备？
+--- Looper.prepare() -> handler创建 -> Looper.loop() -> ...........-> 最后通过looper.quit()退出阻塞
+public class MyThread extends Thread{
+        public Handler thandler = null;
+        @Override
+        public void run() {
+            if(thandler == null){
+                Looper.prepare();
+
+                thandler = new Handler(){
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+                        Log.d(TAG, "MyThread handleMessage: " + Thread.currentThread().getName()+ ", "+ msg.what);
+                        Log.d(TAG, "MyThread handleMessage: " + msg.getTarget().getClass().getSimpleName());
+                    }
+                };
+
+                Looper.loop();//注意loop（）之后的逻辑都不会执行，导致线程阻塞，如log不会执行
+                Log.d(TAG, "run:  looper finished" );
+            }
+        }
+    }
 
 子线程中维护的looper，消息队列无消息的时候的处理方案是什么？有什么作用？
+---停止子线程的looper轮询阻塞，但是主线程不能进行quit退出阻塞
 
-既然可以存在多个handler王message queue里面添加数据（发消息时各handler可能处于不同线程），那么内部是如何确保线程安全的？
+既然可以存在多个handler往message queue里面添加数据（发消息时各handler可能处于不同线程），那么内部是如何确保线程安全的？
 
 如果有一个事件（message）必须尽快执行，那么handler是如何通过消息屏障保证事件的顺利执行？
 
@@ -54,3 +80,7 @@ Handler内存泄漏的原因？为什么其他的内部类没有说过有这个�
 
 
 3、为什么需要在主线程中更新UI，子线程中不行？
+
+
+4、threadlocal是什么？
+是key-value 的键值对，map
