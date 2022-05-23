@@ -19,7 +19,9 @@ Binder，数据拷贝一次
 Socket等其他通信方式，数据拷贝两次
 
 原文链接：https://blog.csdn.net/alankin/article/details/80402809
-说起Binder，其实在我们开发中总是没有感觉到它的存在，但是往往在很多地方都间接的在使用它，比如我们再startAcivity的时候，必定要去调用ActivityManagerService，因为我们都知道Activity并不是我们直接new出来的，而是通过这个service创建出来的，然而这个service是处于另外的进程，我们就必须要通过binder获取这个service，告知它去创建一个Activity出来。
+说起Binder，其实在我们开发中总是没有感觉到它的存在，但是往往在很多地方都间接的在使用它，比如我们再startAcivity的时候，必定要去调用ActivityManagerService，
+因为我们都知道Activity并不是我们直接new出来的，而是通过这个service创建出来的，然而这个service是处于另外的进程，我们就必须要通过binder获取这个service，
+告知它去创建一个Activity出来。
 诸如binder的使用，在很多地方比比皆是，媒体播放，视音频捕获，调用传感器等等，
 
 Binder是Android系统进程间通信（IPC）方式之一，但是为什么Android不使用Linux本生具有的IPC方式？
