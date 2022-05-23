@@ -29,4 +29,32 @@ Binder是Android系统进程间通信（IPC）方式之一，但是为什么Andr
 
 ![](https://img-blog.csdn.net/20180522120125430?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsYW5raW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
+了保护进程空间不被别的进程破坏或者干扰，Linux的进程是相互独立的（进程隔离），而且一个进程空间还分为用户空间(用户程序代码运行的地方)和内核（Kernel内核代码运行的地方）空间，相当于把Kernel和上层的应用程序抽像的隔离开。
+这里有两个隔离，为了安全，一个进程间是相互隔离的，二是进程内有用户和内核的隔离，即使用户的程序崩溃了，内核也不受影响。
+
+Binder框架定义了四个角色：Server，Client，ServiceManager以及Binder驱动。其中Server，Client，ServiceManager运行于用户空间，驱动运行于内核空间。
+这四个角色的关系类似：Server是服务器，Client是客户终端，ServiceManager是服务注册中心（类似房屋中介）。
+
+要进行Client-Server之间的通信，从面向对象的角度，在Server内部有一个Binder实体，在Client内部有一个Binder对象的引用，其实就是Binder的一个代理，
+Client通过对Binder引用间接的操作Server内部的Binder实体，这样就实现了通信。
+
+但是现在的问题是会有很多个提供不同服务的Server（比如有媒体播放服务，音视频捕获服务等），而且会有很多Client（比如多个应用都要调用媒体播放服务），
+那么我们怎么才能够实现正确的Client调用正确的Server呢？就好比房客怎么才能够租到自己想要租的房子（联系上房东），这个时候中介就起到重要作用，房东想要出租自己的房子就必须要到中介注册，
+房客想要租房子就要去中介那里找，同样的道理，这里Client就是房客，Server就是房东，ServiceManager就是房屋中介，每个Server如果要提供服务就必须要去ServiceManager那里去注册，
+ServiceManager在一张查找表中记录一个Server的名字，对应着Server的引用。Client想要获得Server，必须通过名字到ServiceManager取找Server的引用，获得这个Server的binder引用，
+通过这个binder引用去和Server通信。
+
+fd = open(“/dev/binder”, O_RDWR);
+mmap(NULL, MAP_SIZE, PROT_READ, MAP_PRIVATE, fd, 0);
+
+这里使用了linux的系统调用方法mmap()，这里使用mmap创建数据接收的缓存空间。这里必须要说一下mmap方法，mmap()分配的内存除了映射进了接收方进程里，还映射进了内核空间，因而使用copy_from_user()将发送方的缓存数据拷贝到mmap中的内存空间时，其实接收方就可以直接获取这块内存空间了，这样就只需要拷贝一次，而不需要像传统的IPC方式那样，需要copy_from_user将进程1的用户空间拷贝到内核空间，再使用copy_to_user将数据从内核空间拷贝到进程2的用户空间。
+
+上面我们一直在说Client与Server之间的IPC，其实Server与ServiceManager也要通过Binder进行通信，因为本身Server与ServiceManager就在不同的进程中，那么问题来了，刚刚说Server去ServiceManager注册，这个过程是怎么实现的呢，其实这个通信还是binder实现的，只是ServiceManager充当了Server的角色不用注册而已，我们注册的的目的是为了让Client找到正确的Server，但是ServiceManager只有一个，我们这个时候就可以将ServiceManager创建的binder引用定死，android系统在启动的时候就已经创建了ServiceManager的binder(通过调用BINDER_SET_CONTEXT_MGR告诉系统该进程是ServiceManager进程)，而且每个Client都知道这个binder的引用代号为0，所以每个Client就可以直接获得这个binder引用，而不需要从其他地方获取。
+
+Binder的线程管理
+每个Binder的Server进程会创建很多线程来处理Binder请求，可以简单的理解为创建了一个Binder的线程池吧（虽然实际上并不完全是这样简单的线程管理方式），而真正管理这些线程并不是由这个Server端来管理的，而是由Binder驱动进行管理的。
+
+一个进程的Binder线程数默认最大是16，超过的请求会被阻塞等待空闲的Binder线程。理解这一点的话，你做进程间通信时处理并发问题就会有一个底，比如使用ContentProvider时（又一个使用Binder机制的组件），你就很清楚它的CRUD（创建、检索、更新和删除）方法只能同时有16个线程在跑。
+
+
 
