@@ -15,3 +15,18 @@ https://www.bilibili.com/video/BV1Z44y1b77q?spm_id_from=333.999.0.0
 
 IPC通信方式有：socket、pipe、共享内存、信号量、消息队列、Binder
 
+原文链接：https://blog.csdn.net/alankin/article/details/80402809
+说起Binder，其实在我们开发中总是没有感觉到它的存在，但是往往在很多地方都间接的在使用它，比如我们再startAcivity的时候，必定要去调用ActivityManagerService，因为我们都知道Activity并不是我们直接new出来的，而是通过这个service创建出来的，然而这个service是处于另外的进程，我们就必须要通过binder获取这个service，告知它去创建一个Activity出来。
+诸如binder的使用，在很多地方比比皆是，媒体播放，视音频捕获，调用传感器等等，
+
+Binder是Android系统进程间通信（IPC）方式之一，但是为什么Android不使用Linux本生具有的IPC方式？
+
+优点
+性能方面
+在移动设备上（性能受限制的设备，比如要省电），广泛地使用跨进程通信对通信机制的性能有严格的要求，Binder相对出传统的Socket方式，更加高效。Binder数据拷贝只需要一次，而管道、消息队列、Socket都需要2次，共享内存方式一次内存拷贝都不需要，但实现方式又比较复杂。
+安全方面
+首先传统IPC的接收方无法获得对方进程可靠的UID和PID（用户ID进程ID），从而无法鉴别对方身份。Android为每个安装好的应用程序分配了自己的UID，故进程的UID是鉴别进程身份的重要标志。其实Binder机制主要是在本机内进行跨进程通信，而socket等IPC方式主要是用于跨网络的通信手段，因而socket不能限制了入口和出口，所以从使用场景来看，socket给用户提供的使用范围更广，而binder由于为了保证它的数据安全性，必须限制于android系统的机子中，而且在内核中就已经对UID进行了验证。
+
+![](https://img-blog.csdn.net/20180522120125430?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsYW5raW4=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+
