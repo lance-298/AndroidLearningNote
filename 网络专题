@@ -16,3 +16,37 @@ Get与Post请求有什么区别？
 
 
 OKhttp的使用
+
+```
+//1、获取okHttpClient
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(5, TimeUnit.SECONDS)
+//                .cache(new Cache())//添加缓存
+                .build();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //get请求
+                //2.构造get请求
+                Request getRequest = new Request.Builder().url("http:www.baidu.com").get().build();
+
+                //3.构建Call结构
+                Call call = okHttpClient.newCall(getRequest);
+
+                //4.异步请求网络
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        if(response.isSuccessful()){
+                            System.out.println(response.toString());
+                        }
+                    }
+                });
+            }
+        },"okhttp get request").start();
+ ```
