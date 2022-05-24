@@ -1,5 +1,18 @@
 https://github.com/yangkun19921001/Blog/blob/master/%E7%AC%94%E8%AF%95%E9%9D%A2%E8%AF%95/Android%E9%AB%98%E7%BA%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87/Android/%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81/%E7%BD%91%E7%BB%9C%E4%B8%93%E9%A2%98.md
 
+TCP与UDP有什么区别？
 
 
-socket通信机制
+TCP/IP建立连接的过程
+
+
+socket通信机制（封装了TCP+IP）
+
+
+HTTP与HTTPS有什么区别？
+
+
+Get与Post请求有什么区别？
+
+
+OKhttp的使用
