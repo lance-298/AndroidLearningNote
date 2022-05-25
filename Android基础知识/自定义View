@@ -1,1 +1,11 @@
 
+1、自定义view的绘制
+
+https://www.bilibili.com/video/BV1bi4y1t7r8?spm_id_from=333.337.search-card.all.click
+
+1、最重要的是onDraw()方法，一般先绘制的view会被覆盖
+2、绘制的关键：Canvas中的方法，裁切、拉伸等，以及画笔paint的设置
+  canvas的绘制类方法：drawxxx()(关键参数：paint)
+  canvas的辅助类方法：范围裁切（clipxxx())和几何变换（matrix)
+
+使用不同的绘制方法来控制遮盖关系
