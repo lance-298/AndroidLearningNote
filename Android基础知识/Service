@@ -50,3 +50,11 @@ https://github.com/yoyiyi/SoleilNotes/blob/master/Android/IntentService.md
 拥有较高的优先级，不易被系统杀死（继承自Service的缘故），因此比较适合执行一些高优先级的异步任务。
 内部通过 HandlerThread 和 Handler 实现异步操作。
 创建 IntentService 时，只需实现 onHandleIntent 和 构造方法，onHandleIntent 为异步方法，可以执行耗时操作。
+
+4、Service与Activity之间通信的几种方式
+
+http://blog.csdn.net/xiaanming/article/details/9750689
+1、Binder
+2、Intent
+3、接口 Interface
+4、Broadcast 广播接收
