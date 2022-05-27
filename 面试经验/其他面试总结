@@ -1,5 +1,6 @@
+###面试题目总结
 
-###1、AlertDialog，Toast 对 Activity 生命周期的影响
+####1、AlertDialog，Toast 对 Activity 生命周期的影响
 
 ![](https://devyk.oss-cn-qingdao.aliyuncs.com/blog/20200310210007.png)
 
