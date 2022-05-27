@@ -18,11 +18,13 @@ Binder、Intent、接口、广播
 
 ##3、IPC通信方式有哪些？实际开发中遇到哪些IPC的问题
 
-Socket、Pipe、Binder(AIDL、 Messenger)
+https://github.com/yangchong211/YCBlogs/blob/master/android/%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6/02.Activity%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D.md
+Socket、Pipe、Binder(AIDL、 Messenger、ContentProvider)、文件共享
 
 
 
 ##4、线程间通信方式有哪些？
+
 
 handler、sharedpreferences、文件、contentprovider
 
@@ -49,4 +51,4 @@ https://github.com/yangchong211/YCBlogs/blob/master/android/%E5%9F%BA%E7%A1%80%E
 ##7、如何自定义view？流程是什么？是否经常使用？
 
 
-8、
+##8、
