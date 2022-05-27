@@ -12,7 +12,7 @@ windowmanager.addView();来添加的， 它们都是一个个 view ,因此不会
 期有任何影响。
 
 
---2、Service与Activity的通信方式，如果需要service将实时进度传递给activity进行展示，需要什么方式
+###2、Service与Activity的通信方式，如果需要service将实时进度传递给activity进行展示，需要什么方式
 
 https://blog.csdn.net/xiaanming/article/details/9750689
 Binder、Intent、接口、广播
