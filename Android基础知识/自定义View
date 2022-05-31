@@ -9,3 +9,30 @@ https://www.bilibili.com/video/BV1bi4y1t7r8?spm_id_from=333.337.search-card.all.
   canvas的辅助类方法：范围裁切（clipxxx())和几何变换（matrix)
 
 使用不同的绘制方法来控制遮盖关系
+
+
+
+###自定义view的流程
+
+https://developer.android.google.cn/guide/topics/ui/custom-components
+https://developer.android.google.cn/training/custom-views/create-view
+1）自定义属性（attrs.xml中定义）
+<resources>
+       <declare-styleable name="PieChart">
+           <attr name="showText" format="boolean" />
+           <attr name="labelPosition" format="enum">
+               <enum name="left" value="0"/>
+               <enum name="right" value="1"/>
+           </attr>
+       </declare-styleable>
+    </resources>
+请注意，在自定义view构造方法中获取设置的自定义属性时，TypedArray 对象是共享资源，必须在使用后回收TypedArray.recycle() 
+
+2）onMeasure()、onDraw()
+https://developer.android.google.cn/guide/topics/ui/custom-components
+
+    
+
+
+https://www.bilibili.com/video/BV1S741157Qj?spm_id_from=333.999.0.0
+分析需求-》自定义属性-》onMeasure() -》获得自定义属性-》onDraw()绘制外圆弧、内圆弧、文字等自定义图形-》其他，如动画
