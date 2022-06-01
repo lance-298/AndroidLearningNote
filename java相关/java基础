@@ -54,10 +54,12 @@ Map---HashMap
    ---HashTable
    
 
-###6、集合Collection和Map，如何查找数据
+###6、集合Collection和Map，迭代器，如何查找数据
+
+https://www.bilibili.com/video/BV1gA4y1D7uf/?spm_id_from=333.788
  Collection的实现类都各有特性，对数据的处理方式各不相同，所以不好定义直接访问数据的方法。为了兼顾各子类的特性，又能提供访问数据的共性，Collection选择了迭代器模式。
  
- Java中的迭代器就是一个接口，主要有hasNext()和next()方法。
+ Java中的迭代器就是一个接口，主要有hasNext()和next()方法。不过集合是实现Iterable接口来获取当前集合的Iterator，不是直接实现Iterator接口。
  public interface Iterator<E> {
     /**
      * Returns {@code true} if the iteration has more elements.
@@ -77,5 +79,30 @@ Map---HashMap
     E next();
   }
 
+Collection就继承了Iterable接口，并且返回Iterator迭代器（进一步的优势：可以使用for-each循环遍历数据，该语法糖编译后其实也是使用hasNext()和next()方法）
+        Collection<String> collection = new ArrayList<String>();
+        Iterator<String> iterator = collection.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+
+####为什么需要通过这种方式来使用迭代器呢？
+因为集合直接实现迭代器的话，那边人调用了当前集合的next()方法，就会影响到你遍历数据。你本来希望从头开始遍历所有数据，但是别人可能已经将数据遍历完了，你就拿不到数据了。
+而通过实现Iterable方式，就可以每次返回一个新的迭代器，不同迭代器之间，遍历数据时互不影响。
+所以，迭代器具有独立性和隔离性（隔离性是指，如果集合增加或者删除元素，不能影响到已有的迭代器）。
+
+####那如果迭代器在查询数据时，有人在删除或者插入数据，是否会影响迭代器的遍历吗？
+Java针对这种情况，做了处理。处理方式：直接复制元素(保存元素)、fail-fast（保存modCount）、CopyOnWrite(保存引用)
+
+按照正常思路，最简单的方法就是，每次获取迭代器时，将集合内所有的元素复制一份到迭代器中，这样集合的增删操作就不会影响到迭代器。
+不过这种做法会有很多问题，首先，有多少个迭代器就得复制多少分数据，重复数据造成严重的资源浪费。然后，复制数据本身耗时严重，得用上锁等机制保证线程安全，不能用在生产中。
+
+改进方法： 在获取迭代器时让迭代器保存一个int数值，这个int数值是集合的成员属性modCount，用来记录集合增删操作的次数，当集合增删元素时，modCount就会+1。
+因为迭代器是集合的成员内部类，因此可以随时访问集合的成员属性，迭代器在遍历元素时，会检查modCount是否和当初保存的数值一致。
+如果不一致就代表集合在获取迭代器之后，进行了增删操作，此时迭代器就会抛出异常，停止迭代。（抛出异常终止逻辑的方式，成为fail-fast模式，快速失败机制）。
+因此，在for-each循环中，对集合进行增删操作，也可能会抛出异常。
+
+####如果想要遍历元素的同时，进行一些增删操作，需要如何处理？
+方式很多，比如copyOnWrite，写入时复制，保存引用
 
 
