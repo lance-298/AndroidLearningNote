@@ -41,5 +41,41 @@ hash码的作用是确定对象在哈希表中的索引位置，我们在存放�
 
 
 
+###5、集合Collection和Map
 
-###5、equals与hashcode的使用
+Java中的集合分为两种，为Collection和Map，Collection主要用来存放单一类型的元素，Map则用来存放映射（键值对）关系。
+
+Collection---List，存储的元素是有序的（非元素值的有序排列，为插入元素的顺序），且是可重复的，最常用的实现类为ArrayList
+          ---Set，存储的元素不可重复，并且元素往往是无序的，最常用的实现类为HashSet。
+          ---Queue，存储的元素是有序的（非元素值的有序排列），且是可重复的，与List很像，不过并非指插入元素时的顺序，而是指特定规则下的顺序。
+              最大的特性是，按照特定的规则去操作元素，比如先进先出的规则，常用的实现类有ArrayDeque和LinkedList(实现queue和list)。
+          
+Map---HashMap
+   ---HashTable
+   
+
+###6、集合Collection和Map，如何查找数据
+ Collection的实现类都各有特性，对数据的处理方式各不相同，所以不好定义直接访问数据的方法。为了兼顾各子类的特性，又能提供访问数据的共性，Collection选择了迭代器模式。
+ 
+ Java中的迭代器就是一个接口，主要有hasNext()和next()方法。
+ public interface Iterator<E> {
+    /**
+     * Returns {@code true} if the iteration has more elements.
+     * (In other words, returns {@code true} if {@link #next} would
+     * return an element rather than throwing an exception.)
+     *
+     * @return {@code true} if the iteration has more elements
+     */
+    boolean hasNext();
+
+    /**
+     * Returns the next element in the iteration.
+     *
+     * @return the next element in the iteration
+     * @throws NoSuchElementException if the iteration has no more elements
+     */
+    E next();
+  }
+
+
+
