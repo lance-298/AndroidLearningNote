@@ -12,5 +12,7 @@
 5、jetpack的navigation等组件的作用？kotlin的flowable和协程是否了解
 
 6、网络数据获取并展示，一般使用什么组件？retrofit + rxjava
-7、rxjava线程切换涉及到的方法有哪些，简单举例
+
+
+7、rxjava线程切换涉及到的方法有哪些，简单举例，并说明rxjava的优缺点
 
