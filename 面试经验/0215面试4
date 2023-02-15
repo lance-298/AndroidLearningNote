@@ -9,7 +9,7 @@
 
 4、什么是MVVM
 
-5、jetpack的navigation等组件的作用？kotlin的flowable和协程是否了解
+5、jetpack的navigation等组件的作用,workmanager是否了解？kotlin的flowable和协程是否了解
 
 6、网络数据获取并展示，一般使用什么组件？retrofit + rxjava
 
