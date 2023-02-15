@@ -1,0 +1,16 @@
+初试
+
+
+1、service 和 广播的种类？IntentService的作用
+
+2、解释一下泛型、注解、反射的意义，举例说明其作用
+
+3、抽象类、接口的区别
+
+4、什么是MVVM
+
+5、jetpack的navigation等组件的作用？kotlin的flowable和协程是否了解
+
+6、网络数据获取并展示，一般使用什么组件？retrofit + rxjava
+7、rxjava线程切换涉及到的方法有哪些，简单举例
+
